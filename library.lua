@@ -103,10 +103,10 @@
 	local themes = {
 		preset = {
 			["outline"] = hex("#0A0A0A"), -- 
-			["inline"] = hex("#2D2D2D"), --
+			["inline"] = hex("#141416"), --
 			["accent"] = hex("#6078BE"), --
-			["high_contrast"] = hex("#141414"),
-			["low_contrast"] = hex("#1E1E1E"),
+			["high_contrast"] = hex("#101014"),
+			["low_contrast"] = hex("#0C0C10"),
 			["text"] = hex("#B4B4B4"),
 			["text_outline"] = rgb(0, 0, 0),
 			["glow"] = hex("#6078BE"), 
@@ -156,9 +156,17 @@
 			["TextButton"] = "BackgroundColor3", 
 			["ScrollingFrame"] = "ScrollBarImageColor3"
 		}
-	}
+	}		local contrast_ramp = rgbseq{
+			rgbkey(0, rgb(28, 28, 38)),
+			rgbkey(1, rgb(16, 16, 24))
+		}
 
-	local keys = {
+		local button_ramp = rgbseq{
+			rgbkey(0, rgb(16, 16, 24)),
+			rgbkey(1, rgb(28, 28, 38))
+		}
+
+		local keys = {
 		[Enum.KeyCode.LeftShift] = "LS",
 		[Enum.KeyCode.RightShift] = "RS",
 		[Enum.KeyCode.LeftControl] = "LC",
@@ -251,13 +259,11 @@
 				BorderSizePixel = 0,
 				BackgroundColor3 = themes.preset.accent,
 				ZIndex = 1;
-			}) library:apply_theme(hover_instance, "accent", "BackgroundColor3") 
-
-			hover.MouseEnter:Connect(function()
-				library:tween(hover_instance, {
-					BackgroundTransparency = 0, 
-				}) 
-			end)
+			}) library:apply_theme(hover_instance, "accent", "BackgroundColor3")				hover.MouseEnter:Connect(function()
+					library:tween(hover_instance, {
+						BackgroundTransparency = 0.85, 
+					}) 
+				end)
 			
 			hover.MouseLeave:Connect(function()
 				library:tween(hover_instance, {
@@ -437,7 +443,7 @@
 		end
 
 		function library:tween(obj, properties) 
-			local tween = tween_service:Create(obj, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, 0, false, 0), properties):Play()
+			local tween = tween_service:Create(obj, TweenInfo.new(0.2, Enum.EasingStyle.Quint, Enum.EasingDirection.Out, 0, false, 0), properties):Play()
 				
 			return tween
 		end 
@@ -566,7 +572,7 @@
 				local watermark_outline = library:create("Frame", {
 					Parent = tooltip_sgui,
 					Name = "",
-					Size = dim2(0, 0, 0, 22),
+					Size = dim2(0, 0, 0, 24),
 					Position = dim2(0, 500, 0, 300),
 					BorderColor3 = rgb(0, 0, 0),
 					BorderSizePixel = 0,
@@ -593,13 +599,11 @@
 					Size = dim2(1, -2, 1, -2),
 					BorderSizePixel = 0,
 					BackgroundColor3 = rgb(255, 255, 255)
-				})
-				
-				local UIGradient = library:create("UIGradient", {
-					Parent = watermark_background,
-					Name = "",
-					Color = rgbseq{rgbkey(0, rgb(41, 41, 55)), rgbkey(1, rgb(35, 35, 47))}
-				}); library:apply_theme(UIGradient, "contrast", "Color")
+				})					local UIGradient = library:create("UIGradient", {
+						Parent = watermark_background,
+						Name = "",
+						Color = contrast_ramp
+					}); library:apply_theme(UIGradient, "contrast", "Color")
 				
 				local text = library:create("TextLabel", {
 					Parent = watermark_background,
@@ -724,9 +728,9 @@
 					items.window_holder = library:create("Frame", {
 						Parent = items.window_inline,
 						Name = "",
-						Position = dim2(0, 1, 0, 1),
+						Position = dim2(0, 1, 0, 2),
 						BorderColor3 = themes.preset.outline,
-						Size = dim2(1, -2, 1, -2),
+						Size = dim2(1, -2, 1, -3),
 						BorderSizePixel = 0,
 						BackgroundColor3 = rgb(255, 255, 255)
 					})
@@ -735,10 +739,7 @@
 						Parent = items.window_holder,
 						Name = "",
 						Rotation = 90,
-						Color = rgbseq{
-						rgbkey(0, rgb(41, 41, 55)),
-						rgbkey(1, rgb(35, 35, 47))
-					}
+						Color = contrast_ramp
 					})
 		
 					library:apply_theme(items.UIGradient, "contrast", "Color") 
@@ -751,7 +752,7 @@
 						BorderColor3 = rgb(0, 0, 0),
 						Text = cfg.name,
 						BackgroundTransparency = 1,
-						Position = dim2(0, 2, 0, 4),
+						Position = dim2(0, 2, 0, 6),
 						BorderSizePixel = 0,
 						AutomaticSize = Enum.AutomaticSize.XY,
 						TextSize = 12,
@@ -767,17 +768,17 @@
 					items.UIPadding = library:create("UIPadding", {
 						Parent = items.window_holder,
 						Name = "",
-						PaddingBottom = dim(0, 4),
-						PaddingRight = dim(0, 4),
-						PaddingLeft = dim(0, 4)
+						PaddingBottom = dim(0, 6),
+						PaddingRight = dim(0, 6),
+						PaddingLeft = dim(0, 6)
 					})
 					
 					items.outline = library:create("Frame", {
 						Parent = items.window_holder,
 						Name = "",
-						Position = dim2(0, 0, 0, 18),
+						Position = dim2(0, 0, 0, 21),
 						BorderColor3 = rgb(0, 0, 0),
-						Size = dim2(1, 0, 1, -18),
+						Size = dim2(1, 0, 1, -21),
 						BorderSizePixel = 0,
 						BackgroundColor3 = themes.preset.inline
 					})
@@ -810,10 +811,7 @@
 						Parent = items.holder,
 						Name = "",
 						Rotation = 90,
-						Color = rgbseq{
-							rgbkey(0, rgb(41, 41, 55)),
-							rgbkey(1, rgb(35, 35, 47))
-						}
+						Color = contrast_ramp
 					})
 					
 					library:apply_theme(items.UIGradient, "contrast", "Color") 
@@ -821,10 +819,10 @@
 					items.UIPadding = library:create("UIPadding", {
 						Parent = items.holder,
 						Name = "",
-						PaddingTop = dim(0, 5),
-						PaddingBottom = dim(0, 5),
-						PaddingRight = dim(0, 5),
-						PaddingLeft = dim(0, 5)
+						PaddingTop = dim(0, 6),
+						PaddingBottom = dim(0, 6),
+						PaddingRight = dim(0, 6),
+						PaddingLeft = dim(0, 6)
 					})
 					
 					items.glow = library:create("ImageLabel", {
@@ -837,7 +835,7 @@
 						Visible = true,
 						Image = "http://www.roblox.com/asset/?id=18245826428",
 						BackgroundTransparency = 1,
-						ImageTransparency = 0.8, 
+						ImageTransparency = 0.86, 
 						Position = dim2(0, -20, 0, -20),
 						Size = dim2(1, 40, 1, 40),
 						ZIndex = 2,
@@ -883,10 +881,7 @@
 						Parent = button_inline,
 						Name = "",
 						Rotation = 90,
-						Color = rgbseq{
-							rgbkey(0, rgb(35, 35, 47)),
-							rgbkey(1, rgb(41, 41, 55))
-						}
+						Color = button_ramp
 					}) library:apply_theme(UIGradient, "contrast", "Color") 
 					
 					items.Icon = library:create("ImageLabel", {
@@ -904,10 +899,10 @@
 					local UIPadding = library:create("UIPadding", {
 						Parent = button_inline,
 						Name = "",
-						PaddingTop = dim(0, 4),
-						PaddingBottom = dim(0, 4),
-						PaddingRight = dim(0, 4),
-						PaddingLeft = dim(0, 4)
+						PaddingTop = dim(0, 5),
+						PaddingBottom = dim(0, 5),
+						PaddingRight = dim(0, 5),
+						PaddingLeft = dim(0, 5)
 					})
 				-- 
 
@@ -1137,7 +1132,7 @@
 				library:create( "UIGradient" , {
 					Rotation = 90;
 					Parent = items.Shadow;
-					Color = rgbseq{rgbkey(0, rgb(150, 150, 150)), rgbkey(1, rgb(150, 150, 150))}
+					Color = rgbseq{rgbkey(0, rgb(90, 90, 90)), rgbkey(1, rgb(90, 90, 90))}
 				});
 				
 				items.holder = library:create( "Frame" , {
@@ -1310,9 +1305,7 @@
 					BorderColor3 = themes.preset.outline,
 					BorderSizePixel = 0,
 					BackgroundColor3 = rgb(255, 255, 255)
-				}) library:apply_theme(dock_holder, "outline", "BackgroundColor3") 
-				
-				local accent = library:create("Frame", {
+				}) library:apply_theme(dock_holder, "outline", "BackgroundColor3")				local accent = library:create("Frame", {
 					Parent = dock_holder,
 					Name = "",
 					Size = dim2(1, 0, 0, 2),
@@ -1327,8 +1320,8 @@
 					Rotation = 90,
 					Color = rgbseq{
 					rgbkey(0, rgb(255, 255, 255)),
-					rgbkey(1, rgb(167, 167, 167))
-				}
+					rgbkey(1, rgb(133, 133, 133))
+					}
 				})
 				
 				local button_holder = library:create("Frame", {
@@ -1344,7 +1337,7 @@
 				local UIListLayout = library:create("UIListLayout", {
 					Parent = button_holder,
 					Name = "",
-					Padding = dim(0, 5),
+					Padding = dim(0, 4),
 					FillDirection = Enum.FillDirection.Horizontal,
 					SortOrder = Enum.SortOrder.LayoutOrder
 				})
@@ -1352,20 +1345,17 @@
 				local UIPadding = library:create("UIPadding", {
 					Parent = button_holder,
 					Name = "",
-					PaddingTop = dim(0, 6),
-					PaddingBottom = dim(0, 4),
-					PaddingRight = dim(0, 4),
-					PaddingLeft = dim(0, 4)
+					PaddingTop = dim(0, 7),
+					PaddingBottom = dim(0, 5),
+					PaddingRight = dim(0, 5),
+					PaddingLeft = dim(0, 5)
 				})
 						
 				local UIGradient = library:create("UIGradient", {
 					Parent = dock_holder,
 					Name = "",
 					Rotation = 90,
-					Color = rgbseq{
-						rgbkey(0, rgb(41, 41, 55)),
-						rgbkey(1, rgb(35, 35, 47))
-					}
+					Color = contrast_ramp
 				}) library:apply_theme(UIGradient, "contrast", "Color") 
 			-- 
 
@@ -1436,7 +1426,7 @@
 					Rotation = 90,
 					Color = rgbseq{
 						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(167, 167, 167))
+						rgbkey(1, rgb(133, 133, 133))
 					}
 				})
 				
@@ -1518,8 +1508,8 @@
 				library:create("UIPadding", {
 					Parent = background,
 					Name = "",
-					PaddingBottom = dim(0, 4),
-					PaddingLeft = dim(0, 5)
+					PaddingBottom = dim(0, 5),
+					PaddingLeft = dim(0, 6)
 				})
 			--  
 
@@ -1531,38 +1521,36 @@
 					image = "rbxassetid://98823308062942",
 				})
 
-				local items = main_window.items
+				local items = main_window.items					window["tab_holder"] = library:create("Frame", {
+						Parent = items.holder,
+						Name = " ",
+						BackgroundTransparency = 1,
+						Size = dim2(1, 0, 0, 23),
+						BorderColor3 = rgb(0, 0, 0),
+						ZIndex = 5,
+						BorderSizePixel = 0,
+						BackgroundColor3 = rgb(255, 255, 255)
+					})
 
-				window["tab_holder"] = library:create("Frame", {
-					Parent = items.holder,
-					Name = " ",
-					BackgroundTransparency = 1,
-					Size = dim2(1, 0, 0, 22),
-					BorderColor3 = rgb(0, 0, 0),
-					ZIndex = 5,
-					BorderSizePixel = 0,
-					BackgroundColor3 = rgb(255, 255, 255)
-				})
+					library:create("UIListLayout", {
+						Parent = window["tab_holder"],
+						FillDirection = Enum.FillDirection.Horizontal,
+						HorizontalFlex = Enum.UIFlexAlignment.Fill,
+						Padding = dim(0, 3),
+						SortOrder = Enum.SortOrder.LayoutOrder
+					})
 
-				library:create("UIListLayout", {
-					Parent = window["tab_holder"],
-					FillDirection = Enum.FillDirection.Horizontal,
-					HorizontalFlex = Enum.UIFlexAlignment.Fill,
-					Padding = dim(0, 2),
-					SortOrder = Enum.SortOrder.LayoutOrder
-				})
-
-				local section_holder = library:create("Frame", {
-					Parent = items.holder,
-					Name = " ",
-					BackgroundTransparency = 1,
-					Position = dim2(0, -1, 0, 19),
-					BorderColor3 = rgb(0, 0, 0),
-					Size = dim2(1, 0, 1, -22),
-					BorderSizePixel = 0,
-					BackgroundColor3 = rgb(255, 255, 255)
-				})
-				window["section_holder"] = section_holder
+					local section_holder = library:create("Frame", {
+						Parent = items.holder,
+						Name = " ",
+						BackgroundTransparency = 1,
+						Position = dim2(0, -1, 0, 20),
+						BorderColor3 = rgb(0, 0, 0),
+						Size = dim2(1, 0, 1, -22),
+						BorderSizePixel = 0,
+						BackgroundColor3 = rgb(255, 255, 255)
+					})
+					window["section_holder"] = section_holder
 
 				local outline = library:create("Frame", {
 					Parent = section_holder,
@@ -1574,48 +1562,43 @@
 					BackgroundColor3 = themes.preset.outline
 				})
 				
-				library:apply_theme(outline, "outline", "BackgroundColor3") 
+				library:apply_theme(outline, "outline", "BackgroundColor3")					local inline = library:create("Frame", {
+						Parent = outline,
+						Name = "\0",
+						Position = dim2(0, 1, 0, 1),
+						BorderColor3 = rgb(0, 0, 0),
+						Size = dim2(1, -2, 1, -2),
+						BorderSizePixel = 0,
+						BackgroundColor3 = themes.preset.inline
+					})
+					
+					library:apply_theme(inline, "inline", "BackgroundColor3") 
 
-				local inline = library:create("Frame", {
-					Parent = outline,
-					Name = "\0",
-					Position = dim2(0, 1, 0, 1),
-					BorderColor3 = rgb(0, 0, 0),
-					Size = dim2(1, -2, 1, -2),
-					BorderSizePixel = 0,
-					BackgroundColor3 = themes.preset.inline
-				})
-				
-				library:apply_theme(inline, "inline", "BackgroundColor3") 
+					local background = library:create("Frame", {
+						Parent = inline,
+						Name = "\0",
+						Position = dim2(0, 1, 0, 1),
+						BorderColor3 = rgb(0, 0, 0),
+						Size = dim2(1, -2, 1, -2),
+						BorderSizePixel = 0,
+						BackgroundColor3 = rgb(255, 255, 255)
+					})
 
-				local background = library:create("Frame", {
-					Parent = inline,
-					Name = "\0",
-					Position = dim2(0, 1, 0, 1),
-					BorderColor3 = rgb(0, 0, 0),
-					Size = dim2(1, -2, 1, -2),
-					BorderSizePixel = 0,
-					BackgroundColor3 = rgb(255, 255, 255)
-				})
+					library.section_holder = background
 
-				library.section_holder = background
+					library:create("UIPadding", {
+						Parent = background,
+						PaddingTop = dim(0, 5),
+						PaddingBottom = dim(0, 5),
+						PaddingRight = dim(0, 5),
+						PaddingLeft = dim(0, 5)
+					})
 
-				library:create("UIPadding", {
-					Parent = background,
-					PaddingTop = dim(0, 4),
-					PaddingBottom = dim(0, 4),
-					PaddingRight = dim(0, 4),
-					PaddingLeft = dim(0, 4)
-				})
-
-				local UIGradient = library:create("UIGradient", {
-					Parent = background,
-					Rotation = 90,
-					Color = rgbseq{
-						rgbkey(0, rgb(41, 41, 55)),
-						rgbkey(1, rgb(35, 35, 47))
-					}
-				})
+					local UIGradient = library:create("UIGradient", {
+						Parent = background,
+						Rotation = 90,
+						Color = contrast_ramp
+					})
 				
 				library:apply_theme(UIGradient, "contrast", "Color") 
 				library:make_resizable(items.main_holder) 
@@ -1863,14 +1846,11 @@
 			})
 			
 			local UIGradient = library:create("UIGradient", {
-				Parent = watermark_background,
-				Name = "",
-				Rotation = 90,
-				Color = rgbseq{
-					rgbkey(0, rgb(41, 41, 55)),
-					rgbkey(1, rgb(35, 35, 47))
-				}
-			}) library:apply_theme(UIGradient, "contrast", "Color") 
+					Parent = watermark_background,
+					Name = "",
+					Rotation = 90,
+					Color = contrast_ramp
+				}) library:apply_theme(UIGradient, "contrast", "Color") 
 			
 			local text = library:create("TextLabel", {
 				Parent = watermark_background,
@@ -1897,9 +1877,9 @@
 			local accent = library:create("Frame", {
 				Parent = watermark_outline,
 				Name = "",
-				Position = dim2(0, 2, 0, 2),
+				Position = dim2(0, 1, 0, 1),
 				BorderColor3 = rgb(0, 0, 0),
-				Size = dim2(1, -4, 0, 2),
+				Size = dim2(0, 2, 1, -2),
 				BorderSizePixel = 0,
 				BackgroundColor3 = themes.preset.accent
 			}) library:apply_theme(accent, "accent", "BackgroundColor3") 
@@ -1910,7 +1890,7 @@
 				Rotation = 90,
 				Color = rgbseq{
 					rgbkey(0, rgb(255, 255, 255)),
-					rgbkey(1, rgb(167, 167, 167))
+					rgbkey(1, rgb(133, 133, 133))
 				}
 			})
 			
@@ -2432,27 +2412,27 @@
 					Rotation = 90,
 					Color = ColorSequence.new{
 						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(167, 167, 167))
+						rgbkey(1, rgb(133, 133, 133))
 					}
 				})
 				
 				local accent_bottom = library:create("Frame", {
 					Parent = watermark_outline,
 					Name = "",
-					Position = UDim2.new(0, 2, 1, -3),
+					Position = UDim2.new(0, 1, 1, -2),
 					BorderColor3 = rgb(0, 0, 0),
-					Size = UDim2.new(0, -4, 0, 1),
+					Size = UDim2.new(0, 1, 0, 1),
 					BorderSizePixel = 0,
 					BackgroundColor3 = themes.preset.accent
 				})
 				
 				local UIGradient = library:create("UIGradient", {
-					Parent = accent,
+					Parent = accent_bottom,
 					Name = "",
 					Rotation = 90,
 					Color = ColorSequence.new{
 						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(167, 167, 167))
+					rgbkey(1, rgb(133, 133, 133))
 					}
 				})
 
@@ -2515,9 +2495,9 @@
 
 				local inline = library:create("Frame", {
 					Parent = tab_holder,
-					Size = dim2(1, -2, 1, 0),
+					Size = dim2(1, -2, 1, -2),
 					Name = "\0",
-					Position = dim2(0, 1, 0, 1),
+					Position = dim2(0, 1, 0, 2),
 					BorderColor3 = rgb(0, 0, 0),
 					ZIndex = 5,
 					BorderSizePixel = 0,
@@ -2526,7 +2506,7 @@
 
 				local background = library:create("Frame", {
 					Parent = inline,
-					Size = dim2(1, -2, 1, -1),
+					Size = dim2(1, -2, 1, -2),
 					Name = "\0",
 					Position = dim2(0, 1, 0, 1),
 					BorderColor3 = rgb(0, 0, 0),
@@ -2538,7 +2518,7 @@
 				local UIGradient = library:create("UIGradient", {
 					Parent = background,
 					Rotation = 90,
-					Color = rgbseq{rgbkey(0, rgb(41, 41, 55)), rgbkey(1, rgb(35, 35, 47))}
+					Color = button_ramp
 				}) library:apply_theme(UIGradient, "contrast", "Color") 
 
 				local text = library:create("TextLabel", {
@@ -2552,6 +2532,7 @@
 					Size = dim2(1, 0, 1, 0),
 					BorderSizePixel = 0,
 					AutomaticSize = Enum.AutomaticSize.X,
+					Position = dim2(0, 0, 0, 1),
 					TextSize = 12,
 					ZIndex = 5,
 					BackgroundColor3 = rgb(255, 255, 255)
@@ -2585,7 +2566,7 @@
 			function cfg.open_tab()
 				if library.current_tab and library.current_tab[1] ~= background then 
 					local button = library.current_tab[1]
-					button.Size = dim2(1, -2, 1, -1)
+					button.Size = dim2(1, -2, 1, -3)
 					button:FindFirstChildOfClass("UIGradient").Rotation = 90
 					button:FindFirstChildOfClass("TextLabel").TextColor3 = themes.preset.text
 						
@@ -2599,7 +2580,7 @@
 				}
 				
 				local button = library.current_tab[1] 
-				button.Size = dim2(1, -2, 1, 0) -- ENABLED
+				button.Size = dim2(1, -2, 1, -1) -- ENABLED
 				button:FindFirstChildOfClass("UIGradient").Rotation = -90
 				button:FindFirstChildOfClass("TextLabel").TextColor3 = themes.preset.accent 
 
@@ -2662,9 +2643,9 @@
 			local inline = library:create("Frame", {
 				Parent = section,
 				Name = "",
-				Position = dim2(0, 1, 0, 1),
+				Position = dim2(0, 1, 0, 2),
 				BorderColor3 = rgb(0, 0, 0),
-				Size = dim2(1, -2, 1, -2),
+				Size = dim2(1, -2, 1, -3),
 				BorderSizePixel = 0,
 				BackgroundColor3 = themes.preset.outline
 			}) library:apply_theme(inline, "outline", "BackgroundColor3") 
@@ -2695,14 +2676,14 @@
 				Parent = accent,
 				Name = "",
 				Rotation = 90,
-				Color = rgbseq{rgbkey(0, rgb(255, 255, 255)), rgbkey(1, rgb(167, 167, 167))}
+				Color = rgbseq{rgbkey(0, rgb(255, 255, 255)), rgbkey(1, rgb(133, 133, 133))}
 			}) 
 			
 			local UIGradient = library:create("UIGradient", {
 				Parent = __background,
 				Name = "",
 				Rotation = 90,
-				Color = rgbseq{rgbkey(0, rgb(41, 41, 55)), rgbkey(1, rgb(35, 35, 47))}
+				Color = contrast_ramp
 			}) library:apply_theme(UIGradient, "contrast", "Color") 
 			
 			local tab_holder = library:create("Frame", {
@@ -2712,7 +2693,7 @@
 				BackgroundTransparency = 1,
 				Position = dim2(0, -1, 0, 0),
 				BorderColor3 = rgb(0, 0, 0),
-				Size = dim2(1, 2, 0, 21),
+				Size = dim2(1, 2, 0, 22),
 				BorderSizePixel = 0,
 				BackgroundColor3 = rgb(255, 255, 255)
 			}) 
@@ -2741,7 +2722,7 @@
 						BorderColor3 = rgb(0, 0, 0),
 						Text = "",
 						BorderSizePixel = 0,
-						Size = dim2(0, 0, 1, 0),
+						Size = dim2(0, 0, 1, -3),
 						ZIndex = 1,
 						TextSize = 12,
 						BackgroundColor3 = themes.preset.outline
@@ -2750,8 +2731,8 @@
 					local background = library:create("Frame", {
 						Parent = tabb,
 						Name = "",
-						Size = dim2(1, 0, 1, -2),
-						Position = dim2(0, 1, 0, 1),
+						Size = dim2(1, -2, 1, -2),
+						Position = dim2(0, 1, 0, 2),
 						BorderColor3 = rgb(0, 0, 0),
 						ZIndex = 1,
 						BorderSizePixel = 0,
@@ -2762,7 +2743,7 @@
 						Parent = background,
 						Name = "",
 						Rotation = 90,
-						Color = rgbseq{rgbkey(0, rgb(41, 41, 55)), rgbkey(1, rgb(35, 35, 47))}
+						Color = button_ramp
 					}) library:apply_theme(UIGradient, "contrast", "Color")
 					
 					local text = library:create("TextLabel", {
@@ -2801,11 +2782,10 @@
 						Size = dim2(1, 0, 1, -20),
 						Visible = false, 
 						BackgroundTransparency = 1,
-						Position = dim2(0, 0, 0, 24),
+						Position = dim2(0, 0, 0, 25),
 						BackgroundColor3 = rgb(255, 255, 255),
 						BorderColor3 = rgb(0, 0, 0),
 						BorderSizePixel = 0,
-						ScrollBarThickness = 2,
 						CanvasSize = dim2(0, 0, 0, 0)
 					}) library:apply_theme(ScrollingFrame, "accent", "ScrollBarImageColor3") 
 					
@@ -2836,7 +2816,7 @@
 				function multi:open_tab(bool) 
 					ScrollingFrame.Visible = bool 
 					UIGradient.Rotation = bool and -90 or 90
-					tabb.Size = dim2(0, 0, 1, bool and 1 or 0)
+					tabb.Size = dim2(0, 0, 1, bool and -1 or -3)
 					text.TextColor3 = bool and themes.preset.accent or themes.preset.text
 				end
 
@@ -2896,15 +2876,30 @@
 				BackgroundColor3 = rgb(255, 255, 255)
 			})
 
-			local text = library:create("TextLabel", {
+			local header = library:create("Frame", {
 				Parent = background,
+				Name = "header",
+				BorderColor3 = rgb(0, 0, 0),
+				Size = dim2(1, 0, 0, 22),
+				BorderSizePixel = 0,
+				BackgroundColor3 = themes.preset.inline
+			}) library:apply_theme(header, "inline", "BackgroundColor3") 
+
+			local header_ramp = library:create("UIGradient", {
+				Parent = header,
+				Rotation = 90,
+				Color = button_ramp
+			}) library:apply_theme(header_ramp, "contrast", "Color") 
+
+			local text = library:create("TextLabel", {
+				Parent = header,
 				FontFace = library.font,
 				TextColor3 = themes.preset.text,
 				BorderColor3 = rgb(0, 0, 0),
-				Text = cfg.name,
+				Text = string.upper(cfg.name),
 				Name = "\0",
 				BackgroundTransparency = 1,
-				Position = dim2(0, 6, 0, 4),
+				Position = dim2(0, 1, 0, 0),
 				BorderSizePixel = 0,
 				AutomaticSize = Enum.AutomaticSize.XY,
 				TextSize = 12,
@@ -2916,31 +2911,10 @@
 				LineJoinMode = Enum.LineJoinMode.Miter
 			})
 
-			local accent = library:create("Frame", {
-				Parent = background,
-				Name = "\0",
-				BorderColor3 = rgb(0, 0, 0),
-				Size = dim2(1, 0, 0, 2),
-				BorderSizePixel = 0,
-				BackgroundColor3 = themes.preset.accent
-			}) library:apply_theme(accent, "accent", "BackgroundColor3") 
-
-			local UIGradient = library:create("UIGradient", {
-				Parent = accent,
-				Rotation = 90,
-				Color = rgbseq{
-					rgbkey(0, rgb(255, 255, 255)),
-					rgbkey(1, rgb(167, 167, 167))
-				}
-			})
-
 			local UIGradient = library:create("UIGradient", {
 				Parent = background,
 				Rotation = 90,
-				Color = rgbseq{
-					rgbkey(0, rgb(41, 41, 55)),
-					rgbkey(1, rgb(35, 35, 47))
-				}
+				Color = contrast_ramp
 			}) library:apply_theme(UIGradient, "contrast", "Color") 
 
 			local ScrollingFrame = library:create("ScrollingFrame", {
@@ -2952,9 +2926,9 @@
 				MidImage = "rbxassetid://103468666327206",
 				TopImage = "rbxassetid://103468666327206",
 				BottomImage = "rbxassetid://103468666327206",
-				Size = dim2(1, 0, 1, -20),
+				Size = dim2(1, 0, 1, -22),
 				BackgroundTransparency = 1,
-				Position = dim2(0, 0, 0, 20),
+				Position = dim2(0, 0, 0, 22),
 				BackgroundColor3 = rgb(255, 255, 255),
 				BorderColor3 = rgb(0, 0, 0),
 				BorderSizePixel = 0,
@@ -2981,13 +2955,16 @@
 
 			library:create("UIListLayout", {
 				Parent = elements,
-				Padding = dim(0, 4),
+				Padding = dim(0, 5),
 				HorizontalAlignment = Enum.HorizontalAlignment.Center,
 				SortOrder = Enum.SortOrder.LayoutOrder
 			})
 
 			library:create("UIPadding", {
 				Parent = ScrollingFrame,
+				PaddingTop = dim(0, 2),
+				PaddingLeft = dim(0, 2),
+				PaddingRight = dim(0, 2),
 				PaddingBottom = dim(0, 10)
 			})
 
@@ -3071,7 +3048,7 @@
 				local bottom_components = library:create("Frame", {
 					Parent = slider_REAL,
 					Name = "bottom_components",
-					Position = dim2(0, 0, 0, cfg.name and 15 or 0),
+					Position = dim2(0, 0, 0, cfg.name and 14 or 0),
 					BorderColor3 = rgb(0, 0, 0),
 					Size = dim2(1, 0, 0, 0),
 					BorderSizePixel = 0,
@@ -3099,7 +3076,7 @@
 					Name = "inline",
 					Position = dim2(0, 1, 0, 1),
 					BorderColor3 = rgb(0, 0, 0),
-					Size = dim2(1, -2, 1, -2),
+					Size = dim2(1, -3, 1, -3),
 					BorderSizePixel = 0,
 					ZIndex = 1;
 					BackgroundColor3 = themes.preset.inline
@@ -3148,32 +3125,20 @@
 					BackgroundColor3 = cfg.custom_color or themes.preset.accent
 				}) if not cfg.custom_color then library:apply_theme(fill, "accent", "BackgroundColor3") end; 
 				
-				local UIGradient = library:create("UIGradient", {
+				local fill_gradient = library:create("UIGradient", {
 					Parent = fill,
 					Rotation = 90,
 					Color = rgbseq{
 						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(167, 167, 167))
+						rgbkey(1, rgb(133, 133, 133))
 					}
 				})
 				
-				local UIGradient = library:create("UIGradient", {
+				local contrast_gradient = library:create("UIGradient", {
 					Parent = contrast,
 					Rotation = 90,
-					Color = rgbseq{
-						rgbkey(0, rgb(41, 41, 55)),
-						rgbkey(1, rgb(35, 35, 47))
-					}
-				}); library:apply_theme(UIGradient, "contrast", "Color")
-				
-				local UIGradient = library:create("UIGradient", {
-					Parent = background,
-					Rotation = 90,
-					Color = rgbseq{
-						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(167, 167, 167))
-					}
-				})
+					Color = contrast_ramp
+				}); library:apply_theme(contrast_gradient, "contrast", "Color")
 				
 				library:create("UIListLayout", {
 					Parent = bottom_components,
@@ -3332,16 +3297,14 @@
 					Padding = dim(0, 5),
 					Name = "_",
 					FillDirection = Enum.FillDirection.Horizontal
-				})
-			
-				local toggle = library:create("TextButton", {
+				})				local toggle = library:create("TextButton", {
 					Parent = left_components,
 					Name = "!toggle",
 					Text = "",
 					AutoButtonColor = false,
 					Position = dim2(0, 0, 0, 2),
 					BorderColor3 = rgb(0, 0, 0),
-					Size = dim2(0, 14, 0, 14),
+					Size = dim2(0, 13, 0, 13),
 					BorderSizePixel = 0,
 					ZIndex = 1, 
 					BackgroundColor3 = themes.preset.outline
@@ -3358,7 +3321,7 @@
 					ZIndex = 2;
 					BackgroundColor3 = themes.preset.inline
 				}) library:apply_theme(inline, "inline", "BackgroundColor3") 
-			
+	
 				local accent = library:create("Frame", {
 					Parent = inline,
 					BackgroundTransparency = 1;
@@ -3372,12 +3335,12 @@
 				})
 				library:apply_theme(accent, "accent", "BackgroundColor3") 
 
-				local UIGradient = library:create("UIGradient", {
+				local accent_gradient = library:create("UIGradient", {
 					Parent = accent,
 					Rotation = 90,
 					Color = rgbseq{
 						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(167, 167, 167))
+						rgbkey(1, rgb(133, 133, 133))
 					}
 				})
 
@@ -3393,15 +3356,12 @@
 				})
 				library:apply_theme(background, "accent", "BackgroundColor3") 
 
-				local UIGradient = library:create("UIGradient", {
+				local background_gradient = library:create("UIGradient", {
 					Parent = background,
 					Rotation = 90,
 					Name = "_",
-					Color = rgbseq{
-						rgbkey(0, rgb(41, 41, 55)),
-						rgbkey(1, rgb(35, 35, 47))
-					}
-				}) library:apply_theme(UIGradient, "contrast", "Color") 
+					Color = button_ramp
+				}) library:apply_theme(background_gradient, "contrast", "Color")  
 			--  
 
 			library:hoverify(toggle_holder, toggle)
@@ -3467,7 +3427,7 @@
 					Parent = parent,
 					Name = "outline",
 					BorderColor3 = rgb(0, 0, 0),
-					Size = dim2(0, 24, 0, 14),
+					Size = dim2(0, 26, 0, 14),
 					BorderSizePixel = 0,
 					BackgroundColor3 = themes.preset.outline,
 					Text = "",
@@ -3496,17 +3456,15 @@
 					BackgroundColor3 = rgb(250, 165, 27)
 				})
 
-				library:hoverify(colorpicker_button, colorpicker_button)
-			
-				local UIGradient = library:create("UIGradient", {
-					Parent = handler,
-					Rotation = 90,
-					Color = rgbseq{
-						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(167, 167, 167))
-					}
-				})
-			-- 
+				library:hoverify(colorpicker_button, colorpicker_button)					local UIGradient = library:create("UIGradient", {
+						Parent = handler,
+						Rotation = 90,
+						Color = rgbseq{
+							rgbkey(0, rgb(255, 255, 255)),
+							rgbkey(1, rgb(133, 133, 133))
+						}
+					})
+				--  
 
 			-- colorpicker instances
 				local colorpicker_holder = library:create("Frame", {
@@ -3547,10 +3505,7 @@
 					Parent = window_holder,
 					Rotation = 90,
 					Name = "_",
-					Color = rgbseq{
-					rgbkey(0, rgb(41, 41, 55)),
-					rgbkey(1, rgb(35, 35, 47))
-				}
+					Color = contrast_ramp
 				}) library:apply_theme(UIGradient, "contrast", "Color") 
 				
 				local text = library:create("TextLabel", {
@@ -3561,7 +3516,7 @@
 					Text = cfg.name,
 					Name = "text",
 					BackgroundTransparency = 1,
-					Position = dim2(0, 2, 0, 4),
+					Position = dim2(0, 2, 0, 5),
 					BorderSizePixel = 0,
 					AutomaticSize = Enum.AutomaticSize.XY,
 					TextSize = 12,
@@ -3584,9 +3539,9 @@
 				local main_holder = library:create("Frame", {
 					Parent = window_holder,
 					Name = "main_holder",
-					Position = dim2(0, 0, 0, 20),
+					Position = dim2(0, 0, 0, 21),
 					BorderColor3 = rgb(0, 0, 0),
-					Size = dim2(1, 0, 1, -40),
+					Size = dim2(1, 0, 1, -42),
 					BorderSizePixel = 0,
 					BackgroundColor3 = themes.preset.inline
 				}) library:apply_theme(main_holder, "inline", "BackgroundColor3") 
@@ -3647,19 +3602,16 @@
 					Parent = main_holder_background,
 					Rotation = 90,
 					Name = "_",
-					Color = rgbseq{
-						rgbkey(0, rgb(41, 41, 55)),
-						rgbkey(1, rgb(35, 35, 47))
-					}
+					Color = contrast_ramp
 				}) library:apply_theme(UIGradient, "contrast", "Color") 
 				
 				library:create("UIPadding", {
 					Parent = main_holder_background,
-					PaddingTop = dim(0, 4),
+					PaddingTop = dim(0, 5),
 					Name = "_",
-					PaddingBottom = dim(0, 4),
-					PaddingRight = dim(0, 4),
-					PaddingLeft = dim(0, 4)
+					PaddingBottom = dim(0, 5),
+					PaddingRight = dim(0, 5),
+					PaddingLeft = dim(0, 5)
 				})
 				
 				local alpha = library:create("TextButton", {
@@ -4065,7 +4017,7 @@
 				Name = "",
 				BorderColor3 = rgb(0, 0, 0),
 				Text = "", 
-				Size = dim2(0, 24, 0, 14),
+				Size = dim2(0, 26, 0, 14),
 				BorderSizePixel = 0,
 				AutomaticSize = Enum.AutomaticSize.X,
 				BackgroundColor3 = themes.preset.outline
@@ -4106,48 +4058,43 @@
 				BorderSizePixel = 0,
 				AutomaticSize = Enum.AutomaticSize.X,
 				BackgroundColor3 = rgb(255, 255, 255)
-			})
+			})				local UIGradient = library:create("UIGradient", {
+					Parent = handler,
+					Name = "",
+					Rotation = 90,
+					Color = contrast_ramp
+				}); library:apply_theme(UIGradient, "contrast", "Color") 
+				
+				local key_text = library:create("TextLabel", {
+					Parent = handler,
+					Name = "",
+					FontFace = library.font,
+					TextColor3 = themes.preset.text,
+					BorderColor3 = rgb(0, 0, 0),
+					ZIndex = 2;
+					Text = "b",
+					Size = dim2(1, 0, 1, 0),
+					BackgroundTransparency = 1,
+					Position = dim2(0, 0, 0, -2),
+					BorderSizePixel = 0,
+					AutomaticSize = Enum.AutomaticSize.XY,
+					TextSize = 12,
+					BackgroundColor3 = rgb(255, 255, 255)
+				})
 
-			local UIGradient = library:create("UIGradient", {
-				Parent = handler,
-				Name = "",
-				Rotation = 90,
-				Color = rgbseq{
-					rgbkey(0, rgb(41, 41, 55)),
-					rgbkey(1, rgb(35, 35, 47))
-				}
-			}); library:apply_theme(UIGradient, "contrast", "Color") 
-			
-			local key_text = library:create("TextLabel", {
-				Parent = handler,
-				Name = "",
-				FontFace = library.font,
-				TextColor3 = themes.preset.text,
-				BorderColor3 = rgb(0, 0, 0),
-				ZIndex = 2;
-				Text = "b",
-				Size = dim2(1, 0, 1, 0),
-				BackgroundTransparency = 1,
-				Position = dim2(0, 0, 0, -2),
-				BorderSizePixel = 0,
-				AutomaticSize = Enum.AutomaticSize.XY,
-				TextSize = 12,
-				BackgroundColor3 = rgb(255, 255, 255)
-			})
-
-			library:create("UIPadding", {
-				Parent = key_text,
-				PaddingLeft = dim(0, 3),
-				PaddingRight = dim(0, 2),
-			})
+				library:create("UIPadding", {
+					Parent = key_text,
+					PaddingLeft = dim(0, 4),
+					PaddingRight = dim(0, 3),
+				})
 			
 			-- mode selector
 				local keybind_selector = library:create("Frame", {
 					Parent = sgui,
 					Name = "",
 					Position = dim2(0, element_outline.AbsolutePosition.X + 1, 0, element_outline.AbsolutePosition.Y + 17),
-					BorderColor3 = rgb(255, 255, 255),
-					BorderSizePixel = 2,
+					BorderColor3 = rgb(0, 0, 0),
+					BorderSizePixel = 0,
 					Visible = false, 
 					AutomaticSize = Enum.AutomaticSize.XY,
 					BackgroundColor3 = rgb(255, 255, 255)
@@ -4160,6 +4107,13 @@
 					HorizontalFlex = Enum.UIFlexAlignment.Fill,
 					Padding = dim(0, 2)
 				})
+				
+				local selector_ramp = library:create("UIGradient", {
+					Parent = keybind_selector,
+					Name = "",
+					Rotation = 90,
+					Color = contrast_ramp
+				}); library:apply_theme(selector_ramp, "contrast", "Color")
 				
 				local hold_button = library:create("TextButton", {
 					Parent = keybind_selector,
@@ -4232,16 +4186,6 @@
 					Name = "",
 					LineJoinMode = Enum.LineJoinMode.Miter
 				})
-				
-				local UIGradient = library:create("UIGradient", {
-					Parent = keybind_selector,
-					Name = "",
-					Rotation = 90,
-					Color = rgbseq{
-						rgbkey(0, rgb(41, 41, 55)),
-						rgbkey(1, rgb(35, 35, 47))
-					}
-				}); library:apply_theme(UIGradient, "contrast", "Color")
 				
 				local UIStroke = library:create("UIStroke", {
 					Parent = keybind_selector,
@@ -4544,7 +4488,7 @@
 				local bottom_components = library:create("Frame", {
 					Parent = dropdown_REAL,
 					Name = "bottom_components",
-					Position = dim2(0, 0, 0, cfg.name and 15 or 0),
+					Position = dim2(0, 0, 0, cfg.name and 14 or 0),
 					BorderColor3 = rgb(0, 0, 0),
 					Size = dim2(1, 26, 0, 0),
 					BorderSizePixel = 0,
@@ -4605,7 +4549,7 @@
 					ZIndex = 2;
 					Text = "+",
 					Name = "plus",
-					Size = dim2(1, -4, 1, 0),
+					Size = dim2(1, -6, 1, 0),
 					Position = dim2(0, 0, 0, -1),
 					BackgroundTransparency = 1,
 					TextXAlignment = Enum.TextXAlignment.Right,
@@ -4643,29 +4587,26 @@
 					LineJoinMode = Enum.LineJoinMode.Miter
 				})
 				
-				local UIGradient = library:create("UIGradient", {
+				local contrast_gradient = library:create("UIGradient", {
 					Parent = contrast,
 					Rotation = 90,
-					Color = rgbseq{
-						rgbkey(0, rgb(41, 41, 55)),
-						rgbkey(1, rgb(35, 35, 47))
-					}
-				}) library:apply_theme(UIGradient, "contrast", "Color") 
+					Color = contrast_ramp
+				}) library:apply_theme(contrast_gradient, "contrast", "Color") 
 				
-				local UIGradient = library:create("UIGradient", {
+				local background_gradient = library:create("UIGradient", {
 					Parent = background,
 					Rotation = 90,
 					Color = rgbseq{
 						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(167, 167, 167))
+						rgbkey(1, rgb(133, 133, 133))
 					}
-				}) library:apply_theme(UIGradient, "contrast", "Color") 
+				}) library:apply_theme(background_gradient, "contrast", "Color") 
 				
 				library:create("UIListLayout", {
 					Parent = bottom_components,
 					Padding = dim(0, 10),
 					Name = "_",
-					SortOrder = Enum.SortOrder.LayoutOrder
+				SortOrder = Enum.SortOrder.LayoutOrder
 				})     
 			--
 
@@ -4729,13 +4670,11 @@
 					})
 					library:apply_theme(background, "accent", "BackgroundColor3") 
 					library:apply_theme(background, "accent", "ScrollBarImageColor3") 
-				end 
-				
-				local contrast = library:create("Frame", {
+				end				local contrast = library:create("Frame", {
 					Parent = background,
 					Name = "contrast",
 					BorderColor3 = rgb(0, 0, 0),
-					Size = dim2(1, 0, 1, -3),
+					Size = dim2(1, 0, 1, -4),
 					BorderSizePixel = 0,
 					ZIndex = 2, 
 					BackgroundColor3 = rgb(255, 255, 255),
@@ -4744,35 +4683,32 @@
 
 				library:create("UIPadding", {
 					Parent = contrast,
-					PaddingTop = dim(0, 2),
-					PaddingBottom = dim(0, 2),
+					PaddingTop = dim(0, 3),
+					PaddingBottom = dim(0, 3),
 					PaddingRight = dim(0, 0),
 					PaddingLeft = dim(0, 4)
 				})
 				
-				local UIGradient = library:create("UIGradient", {
+				local contrast_gradient = library:create("UIGradient", {
 					Parent = contrast,
 					Rotation = 90,
-					Color = rgbseq{
-						rgbkey(0, rgb(41, 41, 55)),
-						rgbkey(1, rgb(35, 35, 47))
-					}
-				}) library:apply_theme(UIGradient, "contrast", "Color") 
-			
+					Color = contrast_ramp
+				}) library:apply_theme(contrast_gradient, "contrast", "Color") 
+
 				library:create("UIListLayout", {
 					Parent = contrast,
-					Padding = dim(0, 5),
+					Padding = dim(0, 6),
 					SortOrder = Enum.SortOrder.LayoutOrder
-				}) library:apply_theme(UIGradient, "contrast", "Color") 
+				})
 				
-				local UIGradient = library:create("UIGradient", {
+				local background_gradient = library:create("UIGradient", {
 					Parent = background,
 					Rotation = 90,
 					Color = rgbseq{
 						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(167, 167, 167))
+						rgbkey(1, rgb(133, 133, 133))
 					}
-				}) library:apply_theme(UIGradient, "contrast", "Color") 
+				}) library:apply_theme(background_gradient, "contrast", "Color")  
 				
 				local stroke = library:create("UIStroke", {
 					Parent = inline,
@@ -4997,7 +4933,7 @@
 					Rotation = 90,
 					Color = rgbseq{
 					rgbkey(0, rgb(255, 255, 255)),
-					rgbkey(1, rgb(167, 167, 167))
+					rgbkey(1, rgb(133, 133, 133))
 				}
 				}) library:apply_theme(UIGradient, "contrast", "Color") 
 				
@@ -5010,15 +4946,12 @@
 					BackgroundColor3 = rgb(255, 255, 255)
 				})
 				
-				local UIGradient = library:create("UIGradient", {
+				local contrast_gradient = library:create("UIGradient", {
 					Parent = contrast,
 					Name = "",
 					Rotation = 90,
-					Color = rgbseq{
-					rgbkey(0, rgb(41, 41, 55)),
-					rgbkey(1, rgb(35, 35, 47))
-				}
-				}) library:apply_theme(UIGradient, "contrast", "Color") 
+					Color = contrast_ramp
+				}) library:apply_theme(contrast_gradient, "contrast", "Color") 
 				
 				local ScrollingFrame = library:create("ScrollingFrame", {
 					Parent = contrast,
@@ -5266,10 +5199,7 @@
 					Parent = TextButton,
 					Name = "",
 					Rotation = 90,
-					Color = rgbseq{
-						rgbkey(0, rgb(41, 41, 55)),
-						rgbkey(1, rgb(35, 35, 47))
-					}
+					Color = contrast_ramp
 				})
 				
 				library:apply_theme(UIGradient, "contrast", "Color") 
@@ -5368,7 +5298,7 @@
 			local cfg = {
 				callback = options.callback or function() end, 
 				name = options.text or options.name or "Button",
-			}   
+			}
 
 			local button = library:create("TextButton", {
 				Parent = self.current_holder,
@@ -5381,10 +5311,11 @@
 				Text = ""
 			})
 
-			library:hoverify(button, button)
-			
+			local hover = library:hoverify(button, button)
+			hover.ZIndex = 4
+
 			library:apply_theme(button, "outline", "BackgroundColor3") 
-			
+
 			local inline = library:create("Frame", {
 				Parent = button,
 				Name = "",
@@ -5395,9 +5326,9 @@
 				BorderSizePixel = 0,
 				BackgroundColor3 = themes.preset.inline
 			})
-			
+
 			library:apply_theme(inline, "inline", "BackgroundColor3") 
-			
+
 			local background = library:create("Frame", {
 				Parent = inline,
 				Name = "",
@@ -5408,21 +5339,21 @@
 				BorderSizePixel = 0,
 				BackgroundColor3 = themes.preset.accent
 			})
-			
+
 			library:apply_theme(background, "accent", "BackgroundColor3") 
-			
-			local _UIGradient = library:create("UIGradient", {
+
+			local background_gradient = library:create("UIGradient", {
 				Parent = background,
 				Name = "",
 				Rotation = 90,
 				Color = rgbseq{
 					rgbkey(0, rgb(255, 255, 255)),
-					rgbkey(1, rgb(167, 167, 167))
+					rgbkey(1, rgb(133, 133, 133))
 				}
 			})
-			
-			library:apply_theme(_UIGradient, "contrast", "Color") 
-			
+
+			library:apply_theme(background_gradient, "contrast", "Color") 
+
 			local contrast = library:create("Frame", {
 				Parent = background,
 				Name = "",
@@ -5432,19 +5363,16 @@
 				BorderSizePixel = 0,
 				BackgroundColor3 = rgb(255, 255, 255)
 			})
-			
-			local UIGradient = library:create("UIGradient", {
+
+			local contrast_gradient = library:create("UIGradient", {
 				Parent = contrast,
 				Name = "",
 				Rotation = 90,
-				Color = rgbseq{
-					rgbkey(0, rgb(41, 41, 55)),
-					rgbkey(1, rgb(35, 35, 47))
-				}
+				Color = contrast_ramp
 			})
-			
-			library:apply_theme(UIGradient, "contrast", "Color") 
-			
+
+			library:apply_theme(contrast_gradient, "contrast", "Color") 
+
 			local text = library:create("TextLabel", {
 				Parent = contrast,
 				Name = "",
@@ -5453,8 +5381,8 @@
 				TextColor3 = themes.preset.text,
 				BorderColor3 = rgb(0, 0, 0),
 				Text = cfg.name,
-				Size = dim2(1, -4, 1, 0),
-				Position = dim2(0, 4, 0, -1),
+				Size = dim2(1, -8, 1, 0),
+				Position = dim2(0, 5, 0, -1),
 				BackgroundTransparency = 1,
 				TextTruncate = Enum.TextTruncate.AtEnd,
 				BorderSizePixel = 0,
@@ -5462,12 +5390,20 @@
 				TextSize = 12,
 				BackgroundColor3 = rgb(255, 255, 255)
 			})
-			
+
 			local UIStroke = library:create("UIStroke", {
 				Parent = text,
 				Name = "",
 				LineJoinMode = Enum.LineJoinMode.Miter
 			})
+
+			library:connection(button.MouseButton1Down, function()
+				library:tween(inline, {Position = dim2(0, 1, 0, 2), Size = dim2(1, -3, 1, -3)})
+			end)
+
+			library:connection(button.MouseButton1Up, function()
+				library:tween(inline, {Position = dim2(0, 1, 0, 1), Size = dim2(1, -2, 1, -2)})
+			end)
 
 			button.MouseButton1Click:Connect(function()
 				cfg.callback() 
@@ -5663,7 +5599,7 @@
 					Rotation = 90,
 					Color = rgbseq{
 						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(167, 167, 167))
+						rgbkey(1, rgb(133, 133, 133))
 					}
 				}); library:apply_theme(UIGradient, "contrast", "Color") 
 				
@@ -5676,15 +5612,12 @@
 					BackgroundColor3 = rgb(255, 255, 255)
 				})
 				
-				local UIGradient = library:create("UIGradient", {
+				local contrast_gradient = library:create("UIGradient", {
 					Parent = contrast,
 					Name = "",
 					Rotation = 90,
-					Color = rgbseq{
-					rgbkey(0, rgb(41, 41, 55)),
-					rgbkey(1, rgb(35, 35, 47))
-				}
-				}); library:apply_theme(UIGradient, "contrast", "Color") 
+					Color = contrast_ramp
+				}); library:apply_theme(contrast_gradient, "contrast", "Color") 
 				
 				local ScrollingFrame = library:create("ScrollingFrame", {
 					Parent = contrast,
