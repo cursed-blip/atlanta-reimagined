@@ -102,12 +102,12 @@
 
 	local themes = {
 		preset = {
-			["outline"] = hex("#0A0A0A"), -- 
-			["inline"] = hex("#141416"), --
+			["outline"] = hex("#0B0C10"), -- 
+			["inline"] = hex("#2A2E3A"), --
 			["accent"] = hex("#6078BE"), --
-			["high_contrast"] = hex("#101014"),
-			["low_contrast"] = hex("#0C0C10"),
-			["text"] = hex("#B4B4B4"),
+			["high_contrast"] = hex("#15171E"),
+			["low_contrast"] = hex("#1F222C"),
+			["text"] = hex("#C2C6D4"),
 			["text_outline"] = rgb(0, 0, 0),
 			["glow"] = hex("#6078BE"), 
 		},
@@ -155,15 +155,16 @@
 			["ImageLabel"] = "ImageColor3",
 			["TextButton"] = "BackgroundColor3", 
 			["ScrollingFrame"] = "ScrollBarImageColor3"
-		}
-	}		local contrast_ramp = rgbseq{
-			rgbkey(0, rgb(28, 28, 38)),
-			rgbkey(1, rgb(16, 16, 24))
+		}		}
+
+		local contrast_ramp = rgbseq{
+			rgbkey(0, rgb(31, 34, 44)),
+			rgbkey(1, rgb(21, 23, 30))
 		}
 
 		local button_ramp = rgbseq{
-			rgbkey(0, rgb(16, 16, 24)),
-			rgbkey(1, rgb(28, 28, 38))
+			rgbkey(0, rgb(21, 23, 30)),
+			rgbkey(1, rgb(31, 34, 44))
 		}
 
 		local keys = {
@@ -599,7 +600,9 @@
 					Size = dim2(1, -2, 1, -2),
 					BorderSizePixel = 0,
 					BackgroundColor3 = rgb(255, 255, 255)
-				})					local UIGradient = library:create("UIGradient", {
+				})
+
+				local UIGradient = library:create("UIGradient", {
 						Parent = watermark_background,
 						Name = "",
 						Color = contrast_ramp
@@ -764,6 +767,17 @@
 						Name = "",
 						LineJoinMode = Enum.LineJoinMode.Miter
 					})
+					
+					items.title_accent = library:create("Frame", {
+						Parent = items.window_holder,
+						Name = "",
+						Position = dim2(0, 1, 0, 19),
+						BorderColor3 = rgb(0, 0, 0),
+						Size = dim2(0, 0, 0, 1),
+						BorderSizePixel = 0,
+						AutomaticSize = Enum.AutomaticSize.X,
+						BackgroundColor3 = themes.preset.accent
+					}) library:apply_theme(items.title_accent, "accent", "BackgroundColor3")
 					
 					items.UIPadding = library:create("UIPadding", {
 						Parent = items.window_holder,
@@ -1305,7 +1319,9 @@
 					BorderColor3 = themes.preset.outline,
 					BorderSizePixel = 0,
 					BackgroundColor3 = rgb(255, 255, 255)
-				}) library:apply_theme(dock_holder, "outline", "BackgroundColor3")				local accent = library:create("Frame", {
+				}) library:apply_theme(dock_holder, "outline", "BackgroundColor3")
+
+				local accent = library:create("Frame", {
 					Parent = dock_holder,
 					Name = "",
 					Size = dim2(1, 0, 0, 2),
@@ -1417,6 +1433,16 @@
 					BorderSizePixel = 0,
 					BackgroundColor3 = themes.preset.accent
 				}); library:apply_theme(bg, "accent", "BackgroundColor3")
+
+				local bind_tick = library:create("Frame", {
+					Parent = background,
+					Name = "tick",
+					Position = dim2(0, 0, 0, 2),
+					BorderColor3 = rgb(0, 0, 0),
+					Size = dim2(0, 2, 1, -2),
+					BorderSizePixel = 0,
+					BackgroundColor3 = themes.preset.accent
+				}); library:apply_theme(bind_tick, "accent", "BackgroundColor3")
 				
 				
 				library:create("UIGradient", {
@@ -1521,7 +1547,9 @@
 					image = "rbxassetid://98823308062942",
 				})
 
-				local items = main_window.items					window["tab_holder"] = library:create("Frame", {
+				local items = main_window.items
+
+				window["tab_holder"] = library:create("Frame", {
 						Parent = items.holder,
 						Name = " ",
 						BackgroundTransparency = 1,
@@ -1562,7 +1590,9 @@
 					BackgroundColor3 = themes.preset.outline
 				})
 				
-				library:apply_theme(outline, "outline", "BackgroundColor3")					local inline = library:create("Frame", {
+				library:apply_theme(outline, "outline", "BackgroundColor3")
+
+				local inline = library:create("Frame", {
 						Parent = outline,
 						Name = "\0",
 						Position = dim2(0, 1, 0, 1),
@@ -2521,6 +2551,18 @@
 					Color = button_ramp
 				}) library:apply_theme(UIGradient, "contrast", "Color") 
 
+				local indicator = library:create("Frame", {
+					Parent = tab_holder,
+					Name = "indicator",
+					Position = dim2(0, 2, 0, 1),
+					BorderColor3 = rgb(0, 0, 0),
+					Size = dim2(1, -4, 0, 2),
+					BorderSizePixel = 0,
+					ZIndex = 6,
+					BackgroundTransparency = 1,
+					BackgroundColor3 = themes.preset.accent
+				}) library:apply_theme(indicator, "accent", "BackgroundColor3")
+
 				local text = library:create("TextLabel", {
 					Parent = background,
 					FontFace = library.font,
@@ -2569,6 +2611,7 @@
 					button.Size = dim2(1, -2, 1, -3)
 					button:FindFirstChildOfClass("UIGradient").Rotation = 90
 					button:FindFirstChildOfClass("TextLabel").TextColor3 = themes.preset.text
+					library.current_tab[3].BackgroundTransparency = 1
 						
 					library.current_tab[2].Visible = false
 					
@@ -2576,13 +2619,14 @@
 				end
 				
 				library.current_tab = {
-					background, section_holder
+					background, section_holder, indicator
 				}
 				
 				local button = library.current_tab[1] 
-				button.Size = dim2(1, -2, 1, -1) -- ENABLED
+				button.Size = dim2(1, -2, 1, -3) -- ENABLED
 				button:FindFirstChildOfClass("UIGradient").Rotation = -90
 				button:FindFirstChildOfClass("TextLabel").TextColor3 = themes.preset.accent 
+				indicator.BackgroundTransparency = 0.15
 
 				library.current_tab[2].Visible = true 
 
@@ -2739,6 +2783,18 @@
 						BackgroundColor3 = rgb(255, 255, 255)
 					})
 					
+					local tab_tick = library:create("Frame", {
+						Parent = background,
+						Name = "tick",
+						Position = dim2(0, 1, 0.5, -3),
+						BorderColor3 = rgb(0, 0, 0),
+						Size = dim2(0, 2, 0, 6),
+						BorderSizePixel = 0,
+						ZIndex = 2,
+						BackgroundTransparency = 0.55,
+						BackgroundColor3 = themes.preset.accent
+					}) library:apply_theme(tab_tick, "accent", "BackgroundColor3")
+					
 					local UIGradient = library:create("UIGradient", {
 						Parent = background,
 						Name = "",
@@ -2818,6 +2874,7 @@
 					UIGradient.Rotation = bool and -90 or 90
 					tabb.Size = dim2(0, 0, 1, bool and -1 or -3)
 					text.TextColor3 = bool and themes.preset.accent or themes.preset.text
+					tab_tick.BackgroundTransparency = bool and 0 or 0.55
 				end
 
 				library:connection(tabb.MouseButton1Click, function()
@@ -2882,14 +2939,24 @@
 				BorderColor3 = rgb(0, 0, 0),
 				Size = dim2(1, 0, 0, 22),
 				BorderSizePixel = 0,
-				BackgroundColor3 = themes.preset.inline
-			}) library:apply_theme(header, "inline", "BackgroundColor3") 
+				BackgroundColor3 = themes.preset.outline
+			}) library:apply_theme(header, "outline", "BackgroundColor3") 
 
 			local header_ramp = library:create("UIGradient", {
 				Parent = header,
 				Rotation = 90,
 				Color = button_ramp
 			}) library:apply_theme(header_ramp, "contrast", "Color") 
+
+			local header_tick = library:create("Frame", {
+				Parent = header,
+				Name = "tick",
+				Position = dim2(0, 0, 0, 3),
+				BorderColor3 = rgb(0, 0, 0),
+				Size = dim2(0, 2, 1, -6),
+				BorderSizePixel = 0,
+				BackgroundColor3 = themes.preset.accent
+			}) library:apply_theme(header_tick, "accent", "BackgroundColor3")
 
 			local text = library:create("TextLabel", {
 				Parent = header,
@@ -2899,7 +2966,7 @@
 				Text = string.upper(cfg.name),
 				Name = "\0",
 				BackgroundTransparency = 1,
-				Position = dim2(0, 1, 0, 0),
+				Position = dim2(0, 8, 0, 0),
 				BorderSizePixel = 0,
 				AutomaticSize = Enum.AutomaticSize.XY,
 				TextSize = 12,
@@ -3297,7 +3364,9 @@
 					Padding = dim(0, 5),
 					Name = "_",
 					FillDirection = Enum.FillDirection.Horizontal
-				})				local toggle = library:create("TextButton", {
+				})
+
+				local toggle = library:create("TextButton", {
 					Parent = left_components,
 					Name = "!toggle",
 					Text = "",
@@ -3344,6 +3413,29 @@
 					}
 				})
 
+				local check_holder = library:create("Frame", {
+					Parent = accent,
+					Name = "check",
+					AnchorPoint = vec2(0.5, 0.5),
+					Position = dim2(0.5, 0, 0.5, 0),
+					Size = dim2(0, 10, 0, 10),
+					BackgroundTransparency = 1,
+					ZIndex = 4,
+					Visible = false,
+				})
+
+				for i = 0, 4 do 
+					library:create("Frame", {
+						Parent = check_holder,
+						Name = "px",
+						Position = dim_offset(8 - i * 2, i * 2),
+						Size = dim2(0, 2, 0, 2),
+						BorderSizePixel = 0,
+						BackgroundColor3 = rgb(232, 237, 255),
+						ZIndex = 4,
+					})
+				end
+
 				local background = library:create("Frame", {
 					Parent = inline,
 					ZIndex = 2;
@@ -3364,14 +3456,13 @@
 				}) library:apply_theme(background_gradient, "contrast", "Color")  
 			--  
 
-			library:hoverify(toggle_holder, toggle)
-
-			function cfg.set(bool)
-				library:tween(accent, {BackgroundTransparency = bool and 0 or 1})
-				flags[cfg.flag] = bool
-				
-				cfg.callback(bool)
-			end
+			library:hoverify(toggle_holder, toggle)				function cfg.set(bool)
+					library:tween(accent, {BackgroundTransparency = bool and 0 or 1})
+					check_holder.Visible = bool
+					flags[cfg.flag] = bool
+					
+					cfg.callback(bool)
+				end
 
 			function cfg.set_element_visible(bool)
 				toggle_holder.Visible = bool 
@@ -3454,17 +3545,8 @@
 					Size = dim2(1, -2, 1, -2),
 					BorderSizePixel = 0,
 					BackgroundColor3 = rgb(250, 165, 27)
-				})
-
-				library:hoverify(colorpicker_button, colorpicker_button)					local UIGradient = library:create("UIGradient", {
-						Parent = handler,
-						Rotation = 90,
-						Color = rgbseq{
-							rgbkey(0, rgb(255, 255, 255)),
-							rgbkey(1, rgb(133, 133, 133))
-						}
-					})
-				--  
+				})				library:hoverify(colorpicker_button, colorpicker_button)
+				--   
 
 			-- colorpicker instances
 				local colorpicker_holder = library:create("Frame", {
@@ -3508,6 +3590,16 @@
 					Color = contrast_ramp
 				}) library:apply_theme(UIGradient, "contrast", "Color") 
 				
+				local picker_tick = library:create("Frame", {
+					Parent = window_holder,
+					Name = "tick",
+					Position = dim2(0, 1, 0, 4),
+					BorderColor3 = rgb(0, 0, 0),
+					Size = dim2(0, 2, 0, 12),
+					BorderSizePixel = 0,
+					BackgroundColor3 = themes.preset.accent
+				}) library:apply_theme(picker_tick, "accent", "BackgroundColor3")
+				
 				local text = library:create("TextLabel", {
 					Parent = window_holder,
 					FontFace = library.font,
@@ -3516,7 +3608,7 @@
 					Text = cfg.name,
 					Name = "text",
 					BackgroundTransparency = 1,
-					Position = dim2(0, 2, 0, 5),
+					Position = dim2(0, 7, 0, 5),
 					BorderSizePixel = 0,
 					AutomaticSize = Enum.AutomaticSize.XY,
 					TextSize = 12,
@@ -3549,9 +3641,9 @@
 				cfg.holder = library:create( "Frame" , {
 					Parent = colorpicker_holder;
 					Name = "\0";
-					Position = dim2(0, 6, 1, -21);
+					Position = dim2(0, 5, 1, -22);
 					BorderColor3 = rgb(0, 0, 0);
-					Size = dim2(1, -120, 0, 0);
+					Size = dim2(1, -132, 0, 0);
 					BorderSizePixel = 0;
 				});
 				
@@ -3560,10 +3652,10 @@
 				cfg.holder = library:create( "Frame" , {
 					Parent = colorpicker_holder;
 					Name = "\0";
-					Position = dim2(1, 2, 1, -23);
+					Position = dim2(1, -5, 1, -23);
 					BorderColor3 = rgb(0, 0, 0);
 					AnchorPoint = vec2(1, 0);
-					Size = dim2(1, -80, 0, 0);
+					Size = dim2(0, 122, 0, 0);
 					BorderSizePixel = 0;
 				});
 				
@@ -4057,9 +4149,10 @@
 				Size = dim2(1, -2, 1, -2),
 				BorderSizePixel = 0,
 				AutomaticSize = Enum.AutomaticSize.X,
-				BackgroundColor3 = rgb(255, 255, 255)
-			})				local UIGradient = library:create("UIGradient", {
-					Parent = handler,
+				BackgroundColor3 = rgb(255, 255, 255)			})
+
+			local UIGradient = library:create("UIGradient", {
+				Parent = handler,
 					Name = "",
 					Rotation = 90,
 					Color = contrast_ramp
@@ -4749,14 +4842,15 @@
 
 				local is_table = type(value) == "table"
 
-				for _,v in next, cfg.option_instances do 
-					if v.Text == value or (is_table and find(value, v.Text)) then 
-						insert(selected, v.Text)
-						cfg.multi_items = selected
-						v.TextColor3 = themes.preset.accent
-					else 
-						v.TextColor3 = themes.preset.text
-					end
+				for _,v in next, cfg.option_instances do						if v.Text == value or (is_table and find(value, v.Text)) then 
+							insert(selected, v.Text)
+							cfg.multi_items = selected
+							v.TextColor3 = themes.preset.accent
+							v:SetAttribute("Selected", true)
+						else 
+							v.TextColor3 = themes.preset.text
+							v:SetAttribute("Selected", false)
+						end
 				end
 
 				text.Text = is_table and concat(selected, ", ") or selected[1] or "nun"
@@ -4795,6 +4889,14 @@
 					})
 
 					insert(cfg.option_instances, TextButton)
+
+					TextButton.MouseEnter:Connect(function()
+						TextButton.TextColor3 = themes.preset.accent
+					end)
+
+					TextButton.MouseLeave:Connect(function()
+						TextButton.TextColor3 = TextButton:GetAttribute("Selected") and themes.preset.accent or themes.preset.text
+					end)
 
 					TextButton.MouseButton1Down:Connect(function()
 						if cfg.multi then 
