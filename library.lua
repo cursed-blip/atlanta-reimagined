@@ -936,7 +936,7 @@
 						TextColor3 = rgb(0, 0, 0),
 						BorderColor3 = rgb(0, 0, 0),
 						Text = "",
-						Size = dim2(0, 44, 0, 44),
+						Size = dim2(0, 37, 0, 37),
 						BorderSizePixel = 0,
 						TextSize = 14,
 						BackgroundColor3 = themes.preset.inline
@@ -1379,7 +1379,7 @@
 					BorderColor3 = rgb(0, 0, 0),
 					AnchorPoint = vec2(0.5, 0),
 					Position = dim2(0.5, 0, 0, 20),
-					Size = dim2(0, 275, 0, 68),
+					Size = dim2(0, 234, 0, 58),
 					BorderSizePixel = 0,
 					BackgroundColor3 = themes.preset.outline
 				}); 
@@ -1441,7 +1441,7 @@
 				local UIListLayout = library:create("UIListLayout", {
 					Parent = button_holder,
 					Name = "",
-					Padding = dim(0, 7),
+					Padding = dim(0, 6),
 					FillDirection = Enum.FillDirection.Horizontal,
 					SortOrder = Enum.SortOrder.LayoutOrder
 				})
@@ -1449,10 +1449,10 @@
 				local UIPadding = library:create("UIPadding", {
 					Parent = button_holder,
 					Name = "",
-					PaddingTop = dim(0, 12),
-					PaddingBottom = dim(0, 9),
-					PaddingRight = dim(0, 9),
-					PaddingLeft = dim(0, 9)
+					PaddingTop = dim(0, 10),
+					PaddingBottom = dim(0, 8),
+					PaddingRight = dim(0, 8),
+					PaddingLeft = dim(0, 8)
 				})
 						
 				local UIGradient = library:create("UIGradient", {
@@ -2159,8 +2159,7 @@
 					BackgroundColor3 = rgb(255, 255, 255)
 				});
 				
-				items.camera = library:create( "Camera" , {
-					FieldOfView = 70.00022888183594;
+				items.camera = library:create( "Camera" , {						FieldOfView = 78;
 					CameraType = Enum.CameraType.Track;
 					Focus = cfr(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1); -- bro wtf is this serializer doing
 					CFrame = cfr(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1);
@@ -2186,7 +2185,7 @@
 					Name = "\0";
 					BackgroundTransparency = 1;
 					Position = dim2(0.5, 0, 0.5, 10);
-					BorderColor3 = rgb(0, 0, 0);						Size = dim2(0, 135, 0, 230);
+					BorderColor3 = rgb(0, 0, 0);						Size = dim2(0, 155, 0, 255);
 					BorderSizePixel = 0;
 					AnchorPoint = vec2(0.5, 0.5);
 					BackgroundColor3 = rgb(255, 255, 255)
@@ -3145,7 +3144,7 @@
 				BorderColor3 = rgb(0, 0, 0),
 				Text = string.upper(cfg.name),
 				Name = "\0",
-				Position = dim2(0, 8, 0, 0),
+				Position = dim2(0, 8, 0, 1),
 				BorderSizePixel = 0,
 				AutomaticSize = Enum.AutomaticSize.XY,
 				TextSize = 12,
@@ -3639,17 +3638,29 @@
 					Name = "check",
 					AnchorPoint = vec2(0.5, 0.5),
 					Position = dim2(0.5, 0, 0.5, 0),
-					Size = dim2(0, 10, 0, 10),
+					Size = dim2(0, 8, 0, 8),
 					BackgroundTransparency = 1,
 					ZIndex = 4,
 					Visible = false,
 				})
 
-				for i = 0, 4 do 
+				for i = 0, 2 do 
 					library:create("Frame", {
 						Parent = check_holder,
 						Name = "px",
-						Position = dim_offset(8 - i * 2, i * 2),
+						Position = dim_offset(5 - i * 2, i * 2),
+						Size = dim2(0, 2, 0, 2),
+						BorderSizePixel = 0,
+						BackgroundColor3 = rgb(232, 237, 255),
+						ZIndex = 4,
+					})
+				end
+
+				for i = 0, 2 do 
+					library:create("Frame", {
+						Parent = check_holder,
+						Name = "px2",
+						Position = dim_offset(i * 2, 4 - i * 2),
 						Size = dim2(0, 2, 0, 2),
 						BorderSizePixel = 0,
 						BackgroundColor3 = rgb(232, 237, 255),
