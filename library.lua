@@ -936,7 +936,7 @@
 						TextColor3 = rgb(0, 0, 0),
 						BorderColor3 = rgb(0, 0, 0),
 						Text = "",
-						Size = dim2(0, 25, 0, 25),
+						Size = dim2(0, 44, 0, 44),
 						BorderSizePixel = 0,
 						TextSize = 14,
 						BackgroundColor3 = themes.preset.inline
@@ -1379,7 +1379,7 @@
 					BorderColor3 = rgb(0, 0, 0),
 					AnchorPoint = vec2(0.5, 0),
 					Position = dim2(0.5, 0, 0, 20),
-					Size = dim2(0, 157, 0, 39),
+					Size = dim2(0, 275, 0, 68),
 					BorderSizePixel = 0,
 					BackgroundColor3 = themes.preset.outline
 				}); 
@@ -1441,7 +1441,7 @@
 				local UIListLayout = library:create("UIListLayout", {
 					Parent = button_holder,
 					Name = "",
-					Padding = dim(0, 4),
+					Padding = dim(0, 7),
 					FillDirection = Enum.FillDirection.Horizontal,
 					SortOrder = Enum.SortOrder.LayoutOrder
 				})
@@ -1449,10 +1449,10 @@
 				local UIPadding = library:create("UIPadding", {
 					Parent = button_holder,
 					Name = "",
-					PaddingTop = dim(0, 7),
-					PaddingBottom = dim(0, 5),
-					PaddingRight = dim(0, 5),
-					PaddingLeft = dim(0, 5)
+					PaddingTop = dim(0, 12),
+					PaddingBottom = dim(0, 9),
+					PaddingRight = dim(0, 9),
+					PaddingLeft = dim(0, 9)
 				})
 						
 				local UIGradient = library:create("UIGradient", {
@@ -1908,7 +1908,7 @@
 				local holder = library:panel({
 					name = "ESP Preview", 
 					anchor_point = vec2(0, 0),
-					size = dim2(0, 300, 0, 325),
+					size = dim2(0, 300, 0, 400),
 					position = dim2(0, library:unscale(style.items.main_holder.AbsolutePosition.X), 0, library:unscale(style.items.main_holder.AbsolutePosition.Y) + library:unscale(style.items.main_holder.AbsoluteSize.Y) + 2),
 					image = "rbxassetid://77684377836328",
 				})  
@@ -2151,7 +2151,7 @@
 				items.viewportframe = library:create( "ViewportFrame" , {
 					Parent = self.holder;
 					BackgroundTransparency = 1;
-					Size = dim2(1, 0, 0, 220);
+					Size = dim2(1, 0, 0, 290);
 					BorderColor3 = rgb(0, 0, 0);
 					ZIndex = 1;
 					Position = dim2(0, 0, 0, 10);
@@ -2186,8 +2186,7 @@
 					Name = "\0";
 					BackgroundTransparency = 1;
 					Position = dim2(0.5, 0, 0.5, 10);
-					BorderColor3 = rgb(0, 0, 0);
-					Size = dim2(0, 135, 0, 190);
+					BorderColor3 = rgb(0, 0, 0);						Size = dim2(0, 135, 0, 230);
 					BorderSizePixel = 0;
 					AnchorPoint = vec2(0.5, 0.5);
 					BackgroundColor3 = rgb(255, 255, 255)
@@ -3125,7 +3124,7 @@
 				Parent = background,
 				Name = "header",
 				BackgroundTransparency = 1,
-				Size = dim2(1, 0, 0, 22),
+				Size = dim2(1, 0, 0, 20),
 				BorderSizePixel = 0
 			})
 
@@ -3150,15 +3149,7 @@
 				BorderSizePixel = 0,
 				AutomaticSize = Enum.AutomaticSize.XY,
 				TextSize = 12,
-				BackgroundColor3 = themes.preset.outline
-			}) library:apply_theme(text, "outline", "BackgroundColor3")
-
-			library:create("UIPadding", {
-				Parent = text,
-				PaddingTop = dim(0, 5),
-				PaddingBottom = dim(0, 4),
-				PaddingLeft = dim(0, 3),
-				PaddingRight = dim(0, 5)
+				BackgroundTransparency = 1
 			})
 
 			library:create("UIStroke", {
@@ -3181,9 +3172,9 @@
 				MidImage = "rbxassetid://103468666327206",
 				TopImage = "rbxassetid://103468666327206",
 				BottomImage = "rbxassetid://103468666327206",
-				Size = dim2(1, 0, 1, -22),
+				Size = dim2(1, 0, 1, -24),
 				BackgroundTransparency = 1,
-				Position = dim2(0, 0, 0, 22),
+				Position = dim2(0, 0, 0, 24),
 				BackgroundColor3 = rgb(255, 255, 255),
 				BorderColor3 = rgb(0, 0, 0),
 				BorderSizePixel = 0,
