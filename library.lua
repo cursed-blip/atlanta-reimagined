@@ -149,9 +149,8 @@
 			},
 			["text_outline"] = {
 				["Color"] = {}, 	
-			},
-			["glow"] = {
-				["ImageColor3"] = {}, 	
+			},			["glow"] = {
+				["ImageColor3"] = {}, 
 			}, 
 			["high_contrast"] = {
 				["BackgroundColor3"] = {},
@@ -1423,8 +1422,8 @@
 					Name = "",
 					Rotation = 90,
 					Color = rgbseq{
-					rgbkey(0, rgb(255, 255, 255)),
-					rgbkey(1, rgb(133, 133, 133))
+					rgbkey(0, rgb(225, 228, 235)),
+					rgbkey(1, rgb(170, 175, 190))
 					}
 				})
 				
@@ -1539,8 +1538,8 @@
 					Enabled = true, 
 					Rotation = 90,
 					Color = rgbseq{
-						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(133, 133, 133))
+						rgbkey(0, rgb(225, 228, 235)),
+						rgbkey(1, rgb(170, 175, 190))
 					}
 				})
 				
@@ -2024,8 +2023,8 @@
 				Name = "",
 				Rotation = 90,
 				Color = rgbseq{
-					rgbkey(0, rgb(255, 255, 255)),
-					rgbkey(1, rgb(133, 133, 133))
+					rgbkey(0, rgb(225, 228, 235)),
+					rgbkey(1, rgb(170, 175, 190))
 				}
 			})
 			
@@ -2640,8 +2639,8 @@
 					Name = "",
 					Rotation = 90,
 					Color = ColorSequence.new{
-						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(133, 133, 133))
+						rgbkey(0, rgb(225, 228, 235)),
+						rgbkey(1, rgb(170, 175, 190))
 					}
 				})
 				
@@ -2660,8 +2659,8 @@
 					Name = "",
 					Rotation = 90,
 					Color = ColorSequence.new{
-						rgbkey(0, rgb(255, 255, 255)),
-					rgbkey(1, rgb(133, 133, 133))
+						rgbkey(0, rgb(225, 228, 235)),
+					rgbkey(1, rgb(170, 175, 190))
 					}
 				})
 
@@ -2919,7 +2918,7 @@
 				Parent = accent,
 				Name = "",
 				Rotation = 90,
-				Color = rgbseq{rgbkey(0, rgb(255, 255, 255)), rgbkey(1, rgb(133, 133, 133))}
+				Color = rgbseq{rgbkey(0, rgb(225, 228, 235)), rgbkey(1, rgb(170, 175, 190))}
 			}) 
 			
 			local UIGradient = library:create("UIGradient", {
@@ -3376,8 +3375,8 @@
 					Parent = fill,
 					Rotation = 90,
 					Color = rgbseq{
-						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(133, 133, 133))
+						rgbkey(0, rgb(225, 228, 235)),
+						rgbkey(1, rgb(170, 175, 190))
 					}
 				})
 				
@@ -3598,7 +3597,6 @@
 					ZIndex = 1, 
 					BackgroundColor3 = themes.preset.outline
 				}) library:apply_theme(toggle, "outline", "BackgroundColor3") 
-				library:apply_theme(toggle, "accent", "BackgroundColor3") 
 
 				local inline = library:create("Frame", {
 					Parent = toggle,
@@ -3628,8 +3626,8 @@
 					Parent = accent,
 					Rotation = 90,
 					Color = rgbseq{
-						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(133, 133, 133))
+						rgbkey(0, rgb(225, 228, 235)),
+						rgbkey(1, rgb(170, 175, 190))
 					}
 				})
 
@@ -3644,11 +3642,11 @@
 					Visible = false,
 				})
 
-				for i = 0, 2 do 
+				for i = 0, 2 do -- down-stroke of the V
 					library:create("Frame", {
 						Parent = check_holder,
 						Name = "px",
-						Position = dim_offset(5 - i * 2, i * 2),
+						Position = dim_offset(0, 2 + i * 2),
 						Size = dim2(0, 2, 0, 2),
 						BorderSizePixel = 0,
 						BackgroundColor3 = rgb(232, 237, 255),
@@ -3656,11 +3654,11 @@
 					})
 				end
 
-				for i = 0, 2 do 
+				for i = 0, 3 do -- up-stroke of the V
 					library:create("Frame", {
 						Parent = check_holder,
 						Name = "px2",
-						Position = dim_offset(i * 2, 4 - i * 2),
+						Position = dim_offset(2 + i * 2, 6 - i * 2),
 						Size = dim2(0, 2, 0, 2),
 						BorderSizePixel = 0,
 						BackgroundColor3 = rgb(232, 237, 255),
@@ -4940,8 +4938,8 @@
 					Parent = background,
 					Rotation = 90,
 					Color = rgbseq{
-						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(133, 133, 133))
+						rgbkey(0, rgb(225, 228, 235)),
+						rgbkey(1, rgb(170, 175, 190))
 					}
 				}) library:apply_theme(background_gradient, "contrast", "Color") 
 				
@@ -5100,8 +5098,8 @@
 					Parent = background,
 					Rotation = 90,
 					Color = rgbseq{
-						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(133, 133, 133))
+						rgbkey(0, rgb(225, 228, 235)),
+						rgbkey(1, rgb(170, 175, 190))
 					}
 				}) library:apply_theme(background_gradient, "contrast", "Color")  
 				
@@ -5351,8 +5349,8 @@
 					Name = "",
 					Rotation = 90,
 					Color = rgbseq{
-					rgbkey(0, rgb(255, 255, 255)),
-					rgbkey(1, rgb(133, 133, 133))
+					rgbkey(0, rgb(225, 228, 235)),
+					rgbkey(1, rgb(170, 175, 190))
 				}
 				}) library:apply_theme(UIGradient, "contrast", "Color") 
 				
@@ -5766,8 +5764,8 @@
 				Name = "",
 				Rotation = 90,
 				Color = rgbseq{
-					rgbkey(0, rgb(255, 255, 255)),
-					rgbkey(1, rgb(133, 133, 133))
+					rgbkey(0, rgb(225, 228, 235)),
+					rgbkey(1, rgb(170, 175, 190))
 				}
 			})
 
@@ -5926,7 +5924,7 @@
 				Name = "divider",
 				Size = dim2(1, -8, 0, 13),
 				BorderSizePixel = 0,
-				BackgroundColor3 = rgb(255, 255, 255)
+				BackgroundTransparency = 1
 			})
 
 			local line = library:create("Frame", {
@@ -5947,12 +5945,11 @@
 				Size = dim2(0, 2, 0, 5),
 				BorderSizePixel = 0,
 				BackgroundColor3 = themes.preset.accent
-			}) library:apply_theme(fill, "accent", "BackgroundColor3")
-
-			if cfg.name then 
+			}) library:apply_theme(fill, "accent", "BackgroundColor3")			if cfg.name then
 				local text = library:create("TextLabel", {
 					Parent = divider,
 					Name = "text",
+					ZIndex = 3,
 					FontFace = library.font,
 					TextColor3 = themes.preset.text,
 					Text = string.upper(cfg.name),
@@ -5968,6 +5965,7 @@
 				local chip = library:create("Frame", {
 					Parent = divider,
 					Name = "chip",
+					ZIndex = 2,
 					Position = dim2(0, 6, 0, 0),
 					Size = dim2(0, text.TextBounds.X + 14, 1, 0),
 					BorderSizePixel = 0,
@@ -5995,9 +5993,10 @@
 			local holder = library:create("Frame", {
 				Parent = self.holder,
 				Name = "paragraph",
-				Size = dim2(1, -8, 0, 12),
+				Size = dim2(1, -8, 0, 0),
+				AutomaticSize = Enum.AutomaticSize.Y,
 				BorderSizePixel = 0,
-				BackgroundColor3 = rgb(255, 255, 255)
+				BackgroundTransparency = 1
 			})
 
 			local outline = library:create("Frame", {
@@ -6024,7 +6023,7 @@
 				Position = dim2(0, 1, 0, 1),
 				Size = dim2(1, -2, 1, -2),
 				BorderSizePixel = 0,
-				BackgroundColor3 = rgb(255, 255, 255)
+				BackgroundTransparency = 1
 			})
 
 			local text = library:create("TextLabel", {
@@ -6184,8 +6183,8 @@
 					Name = "",
 					Rotation = 90,
 					Color = rgbseq{
-						rgbkey(0, rgb(255, 255, 255)),
-						rgbkey(1, rgb(133, 133, 133))
+						rgbkey(0, rgb(225, 228, 235)),
+						rgbkey(1, rgb(170, 175, 190))
 					}
 				}); library:apply_theme(UIGradient, "contrast", "Color") 
 				
