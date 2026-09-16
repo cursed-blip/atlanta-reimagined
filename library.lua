@@ -237,23 +237,29 @@
 		makefolder(library.directory .. path)
 	end
 
-	writefile("ffff.ttf", game:HttpGet("https://github.com/weasely111/beta/raw/refs/heads/main/fs-tahoma-8px.ttf"))
+	library.font = Font.fromEnum(Enum.Font.Code)
 
-	local tahoma = {
-		name = "SmallestPixel7",
-		faces = {
-			{
-				name = "Regular",
-				weight = 400,
-				style = "normal",
-				assetId = getcustomasset("ffff.ttf")
+	pcall(function()
+		if isfile and not isfile("ffff.ttf") then
+			writefile("ffff.ttf", game:HttpGet("https://github.com/weasely111/beta/raw/refs/heads/main/fs-tahoma-8px.ttf"))
+		end
+	
+		local tahoma = {
+			name = "SmallestPixel7",
+			faces = {
+				{
+					name = "Regular",
+					weight = 400,
+					style = "normal",
+					assetId = getcustomasset("ffff.ttf")
+				}
 			}
 		}
-	}
-
-	writefile("dddd.ttf", http_service:JSONEncode(tahoma))
-
-	library.font = Font.new(getcustomasset("dddd.ttf"), Enum.FontWeight.Regular)
+	
+		writefile("dddd.ttf", http_service:JSONEncode(tahoma))
+	
+		library.font = Font.new(getcustomasset("dddd.ttf"), Enum.FontWeight.Regular)
+	end)
 
 	local config_holder
 
@@ -1806,12 +1812,14 @@
 				end})
 				section:button_holder({})
 				section:button({name = "Join New Server", callback = function()
-					local apiRequest = game:GetService("HttpService"):JSONDecode(game:HttpGetAsync("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"))
-					local data = apiRequest.data[random(1, #apiRequest.data)]
-
-					if data.playing <= flags["max_players"] then
-						game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, data.id)
-					end
+					pcall(function()
+						local apiRequest = game:GetService("HttpService"):JSONDecode(game:HttpGetAsync("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"))
+						local data = apiRequest.data[random(1, #apiRequest.data)]
+			
+						if data.playing <= flags["max_players"] then
+							game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, data.id)
+						end
+					end)
 				end})
 				section:slider({name = "Max Players", flag = "max_players", min = 0, max = 40, default = 15, interval = 1})
 
