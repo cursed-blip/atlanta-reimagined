@@ -3625,6 +3625,7 @@
 				local accent_gradient = library:create("UIGradient", {
 					Parent = accent,
 					Rotation = 90,
+					Enabled = false, -- solid fill: a sheen on an 11px box reads as a line
 					Color = rgbseq{
 						rgbkey(0, rgb(225, 228, 235)),
 						rgbkey(1, rgb(170, 175, 190))
@@ -3642,23 +3643,13 @@
 					Visible = false,
 				})
 
-				for i = 0, 2 do -- down-stroke of the V
+				-- proper V-shaped check, 2px pixels inside the 8x8 holder:
+				-- down-left arm, then up-right arm
+				for _, pos in { {0, 2}, {2, 4}, {4, 2}, {6, 0} } do
 					library:create("Frame", {
 						Parent = check_holder,
 						Name = "px",
-						Position = dim_offset(0, 2 + i * 2),
-						Size = dim2(0, 2, 0, 2),
-						BorderSizePixel = 0,
-						BackgroundColor3 = rgb(232, 237, 255),
-						ZIndex = 4,
-					})
-				end
-
-				for i = 0, 3 do -- up-stroke of the V
-					library:create("Frame", {
-						Parent = check_holder,
-						Name = "px2",
-						Position = dim_offset(2 + i * 2, 6 - i * 2),
+						Position = dim_offset(pos[1], pos[2]),
 						Size = dim2(0, 2, 0, 2),
 						BorderSizePixel = 0,
 						BackgroundColor3 = rgb(232, 237, 255),
