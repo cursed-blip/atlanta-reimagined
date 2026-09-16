@@ -3632,30 +3632,7 @@
 					}
 				})
 
-				local check_holder = library:create("Frame", {
-					Parent = accent,
-					Name = "check",
-					AnchorPoint = vec2(0.5, 0.5),
-					Position = dim2(0.5, 0, 0.5, 0),
-					Size = dim2(0, 8, 0, 8),
-					BackgroundTransparency = 1,
-					ZIndex = 4,
-					Visible = false,
-				})
-
-				-- proper V-shaped check, 2px pixels inside the 8x8 holder:
-				-- down-left arm, then up-right arm
-				for _, pos in { {0, 2}, {2, 4}, {4, 2}, {6, 0} } do
-					library:create("Frame", {
-						Parent = check_holder,
-						Name = "px",
-						Position = dim_offset(pos[1], pos[2]),
-						Size = dim2(0, 2, 0, 2),
-						BorderSizePixel = 0,
-						BackgroundColor3 = rgb(232, 237, 255),
-						ZIndex = 4,
-					})
-				end
+				-- no checkmark pixels: at 13px any mark reads as a white smear, the accent fill is the ON state
 
 				local background = library:create("Frame", {
 					Parent = inline,
@@ -3681,7 +3658,6 @@
 				
 				function cfg.set(bool)
 					library:tween(accent, {BackgroundTransparency = bool and 0 or 1})
-					check_holder.Visible = bool
 					flags[cfg.flag] = bool
 					
 					cfg.callback(bool)
